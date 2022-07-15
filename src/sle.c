@@ -222,7 +222,7 @@ double **solve(double **matrix, int rows, int columns) {
     double **a = calloc(rows, sizeof(double *));
     double **b = calloc(rows, sizeof(double *));
     double **res;
-
+    double **inv;
 
 
     for (int i = 0; i < rows; i++)
@@ -238,7 +238,9 @@ double **solve(double **matrix, int rows, int columns) {
     for (int i = 0; i < rows; i++)
         b[i][0] = matrix[i][columns - 1];
 
-    res = multiply(invert(a, rows, columns - 1), columns - 1, rows, b, 1);
+    inv = invert(a, rows, columns - 1);
+    res = multiply(inv, columns - 1, rows, b, 1);
+    free_m(inv, columns - 1);
     free_m(a, rows);
     free_m(b, rows);
     return res;
